@@ -1,0 +1,96 @@
+<!-- Dependencies -->
+
+<!-- Include Quill stylesheet -->
+<link href="https://cdn.quilljs.com/1.2.4/quill.snow.css" rel="stylesheet">
+
+<!-- Editor stylesheet -->
+<link href="editor.css" rel="stylesheet">
+
+<!-- Main stylesheet -->
+<link href="main.css" rel="stylesheet">
+
+<!-- Source Sans Font -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">
+
+<!-- UnderscoreJS -->
+<script src="underscore.js"></script>
+
+<!-- Quill library -->
+<script src="https://cdn.quilljs.com/1.2.4/quill.js"></script>
+
+<!-- dom-to-image for DOM rasterization -->
+<script src="dom-to-image.js"></script>
+
+<!-- Jimp library for image processing -->
+<script src="jimp.js"></script>
+
+<!-- FFT -->
+<script src="custom_fft.js"></script>
+
+
+
+<!-- Editor Area -->
+<div id="editor-container">
+
+	<!-- Toolbar container -->
+	<div id="toolbar">
+		
+		<!-- Add font size dropdown -->
+		<select class="ql-size">
+			<option value="small"></option>
+			<!-- Note a missing, thus falsy value, is used to reset to default -->
+			<option selected></option> 
+			<option value="large"></option>
+			<option value="huge"></option>
+		</select>
+		
+		<div>
+			<button class="ql-bold"></button>
+			<button class="ql-italic"></button>
+		</div>
+		
+		<div class="eye-wrapper">
+			<button title="Heat View" class="heat" alt="Heat View">&#9832;</button>
+			<button title="Glance View" class="eye" alt="Glance View">&#9678;</button>
+		</div>
+	</div>
+	
+	<!--
+    <div id="toolbar">
+      <button class="ql-bold">Bold</button>
+      <button class="ql-italic">Italic</button>
+    </div>
+  -->
+	
+	<div id="overlay">
+		<canvas id="heatmap" width="512" height="512"></canvas>
+	</div>
+
+	<!-- Editor container -->
+	<div id="editor"></div>
+
+</div>
+
+
+<!-- Test Display -->
+<!--<div id="test-display"></div>-->
+
+<!-- Test container for FFT spectrum -->
+<!--<canvas id="Spectrum" width="128" height="128"></canvas>-->
+<!--<canvas id="Result" width="128" height="128"></canvas>-->
+
+
+
+<!-- Scripts -->
+
+<!-- Initialize Quill editor -->
+<script src="editor.js"></script>
+
+<!-- Utility script for analysis -->
+<script src="analysis-utility.js"></script>
+
+<!-- Saliency -->
+<script src="saliency.js"></script>
+
+<!-- Script for analysis -->
+<script src="analysis.js"></script>
