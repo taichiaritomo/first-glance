@@ -308,7 +308,8 @@ function blur(s_map) {
 		console.log(node);
 		console.log("saliency level: " + normalized);
 		node.style.webkitTextFillColor = "transparent";
-		node.style.textShadow = "0 0 " + blurRadius + "px black";
+		var color = node.style.color;
+		node.style.textShadow = "0 0 " + blurRadius + "px " + color;
 	}
 	
 }
@@ -320,7 +321,8 @@ function unblur() {
 	var i, e, d;
 	for (i = 0; i < descendents.length; ++i) {
 		e = descendents[i];
-		e.style.textShadow = "0 0 0 black";
+		var color = e.style.color;
+		e.style.textShadow = "0 0 0 " + color;
 	}
 }
 
