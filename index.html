@@ -30,7 +30,7 @@
 
 
 <!-- Editor Area -->
-<div id="editor-container">
+<div id="container">
 
 	<!-- Toolbar container -->
 	<div id="toolbar">
@@ -56,24 +56,29 @@
 		</div>
 		
 		<div class="eye-wrapper">
-			<button title="Heat View" class="heat" alt="Heat View">&#9832;</button>
-			<button title="Glance View" class="eye" alt="Glance View">&#9678;</button>
+			<button title="Heat View" class="heat" alt="Hotplate view">&#9832;</button>
+			<button title="Glance View" class="eye" alt="Glance view">&#9678;</button>
 		</div>
 	</div>
 	
-	<!--
-    <div id="toolbar">
-      <button class="ql-bold">Bold</button>
-      <button class="ql-italic">Italic</button>
-    </div>
-  -->
-	
-	<div id="overlay">
-		<canvas id="heatmap" width="512" height="512"></canvas>
-	</div>
+	<div id="editor-container">
 
-	<!-- Editor container -->
-	<div id="editor"></div>
+		<div id="overlay">
+			<canvas id="heatmap" width="512" height="512"></canvas>
+		</div>
+		
+		<div id="innershadow">
+		</div>
+		
+		<div id="corner_bottom-left"></div>
+		<div id="corner_bottom-right"></div>
+
+		<div id="editor">
+		</div>
+
+		<div id="rectangles">
+		</div>
+	</div>
 
 </div>
 
@@ -89,11 +94,11 @@
 
 <!-- Scripts -->
 
-<!-- Initialize Quill editor -->
-<script src="editor.js"></script>
-
 <!-- Utility script for analysis -->
 <script src="analysis-utility.js"></script>
+
+<!-- Initialize Quill editor -->
+<script src="editor.js"></script>
 
 <!-- Saliency -->
 <script src="saliency.js"></script>

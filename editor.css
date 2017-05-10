@@ -1,37 +1,88 @@
 body {
 /*	background-color: #f2f2f2;*/
 	background-color: #ffffff;
+	display: flex;
 }
 
-#editor-container {
+#container {
 /*
 	height: 100%;
 	max-height: 511px;
 	width: 100%;
 	max-width: 512px;
 */
-	width: 514px;
+	position: relative;
+	align-self: center;
+	width: 512px;
+	height: 553px;
 	margin: 0 auto 0 auto;
 }
 
 #toolbar {
 	background-color: white;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	position: absolute;
+	width: 100%;
+	height: 41px;
+}
+
+#editor-container {
+	position: absolute;
+	top: 41px;
+	width: 100%;
 }
 
 #editor {
-	height: 513px;
-	width: 514px;
+	height: 512px;
+	width: 512px;
+	border: none;
 }
+
+#innershadow {
+	-webkit-box-shadow: inset 0 0 12px 5px white;
+/*    box-shadow:         inset 0 0 20px blue;*/
+	position: absolute;
+	width: 512px;
+	height: 512px;
+	pointer-events: none;
+}
+
+#corner_bottom-left {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 10px;
+	height: 10px;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+}
+
+#corner_bottom-right {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 10px;
+	height: 10px;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+
 
 #overlay {
 	background-color: white;
+	position: absolute;
+/*	top: 50px;*/
+	pointer-events: none;
+	opacity: 1;
+}
+
+#rectangles {
 	position: absolute;
 	top: 50px;
 	pointer-events: none;
 	margin-left: 1px;
 	margin-right: 1px;
-	opacity: 0;
-	transition: opacity 0.1s ease-in-out;
 }
 
 #heatmap {
@@ -56,8 +107,6 @@ body {
 }
 
 .ql-editor * {
-	text-shadow: 0 0 0 black;
-	
 	-webkit-transition: text-shadow 0.1s ease-in-out;
 	-moz-transition: text-shadow 0.1s ease-in-out;
 	-o-transition: text-shadow 0.1s ease-in-out;
@@ -75,7 +124,6 @@ body {
 .eye {
 	font-size: 18px;
 	line-height: 18px;
-/*	float: right;*/
 }
 
 .heat {

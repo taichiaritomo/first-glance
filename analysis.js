@@ -6,7 +6,7 @@ var s_b = 1; // bold attribute adds a strength of 1
 
 /* Text editor canvas size */
 var editorSize = 512; // updated on look(), assumes editor rasterization is square
-var mapSize = 64; // size of saliency map
+var mapSize = 128; // size of saliency map
 var downsample = editorSize / mapSize;
 
 
@@ -20,6 +20,14 @@ var AVG_5 = [ [0.04, 0.04, 0.04, 0.04, 0.04],
 			  [0.04, 0.04, 0.04, 0.04, 0.04],
 			  [0.04, 0.04, 0.04, 0.04, 0.04],
 			  [0.04, 0.04, 0.04, 0.04, 0.04] ];
+
+var AVG_7 = [ [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
+			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
+			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
+			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
+			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
+			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
+			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816] ];
 
 
 
@@ -73,7 +81,7 @@ function test_process() {
 function look() {
 	console.log("looking...");
 	
-	var ql = document.querySelector(".ql-editor");
+	var ql = document.querySelector("#editor");
 	
 	var image = new Jimp(editorSize, editorSize);
 	var s_map = [];
@@ -86,6 +94,7 @@ function look() {
 		image.resize(mapSize, mapSize); // resize
         // test_renderRGBA(image.bitmap.data, mapSize, mapSize); // render (testing)
 		var gs = grayscale(image.bitmap.data, mapSize, mapSize); // convert to grayscale
+//		test_saliency(gs, mapSize, mapSize);
 		s_map = computeSaliency(gs, mapSize, mapSize); // compute saliency map
 		
 		if (glance_view) {
@@ -139,7 +148,7 @@ function heat(s_map) {
 	
 	context.putImageData(imgData, 0, 0);
 	
-	document.querySelector("#overlay").style.opacity = 0.8;
+//	document.querySelector("#overlay").style.opacity = 0.8;
 	document.querySelector("#heatmap").style.opacity = 1;
 }
 
@@ -150,7 +159,18 @@ function heat(s_map) {
  * @param s_map a 128x128 saliency map, given as an array of grayscale (0-1) values
  */
 function blur(s_map) {
-
+	
+	// set up text shadow
+	var ancestor = document.querySelector(".ql-editor"),
+		descendents = ancestor.getElementsByTagName("*");
+	var i, e, d;
+	for (i = 0; i < descendents.length; ++i) {
+		e = descendents[i];
+		var color = e.style.color;
+		e.style.textShadow = "0 0 0 " + color;
+	}
+	
+	
 	session++; // update session counter for saliency refresh
 	console.log();
 	console.log("session: " + session);
@@ -329,68 +349,5 @@ function unblur() {
 
 
 
-/* Function called when test button is pressed */
-function glanceButtonHandler() {
-	// turn off heat view, if on
-	if (heat_view) {
-		document.querySelector(".heat").style.color = "black";
-		document.querySelector("#overlay").style.opacity = 0;
-		heat_view = false;
-	}
-	
-	// switch glance_view
-	glance_view = !glance_view;
-	if (glance_view) {
-		document.querySelector(".eye").innerHTML = "&#9673;";
-		look();
-	} else {
-		document.querySelector(".eye").innerHTML = "&#9678;";
-		unblur();
-	}
-	
-//	naiveAttn();
-//	test_process();
-//	var s_map = look();
-}
 
-
-function heatButtonHandler() {
-	// turn off glance view, if on
-	if (glance_view) {
-		document.querySelector(".eye").innerHTML = "&#9678;";
-		unblur();
-		glance_view = false;
-	}
-	
-	// switch heat view
-	heat_view = !heat_view;
-	if (heat_view) {
-		document.querySelector(".heat").style.color = "rgb(255, 69, 0)";
-		look();
-	} else {
-		document.querySelector(".heat").style.color = "black";
-		document.querySelector("#overlay").style.opacity = 0;
-	}
-}
-
-
-
-document.querySelector(".heat").onclick = heatButtonHandler;
-document.querySelector(".eye").onclick = glanceButtonHandler;
-
-editor.on("text-change", _.debounce(function() {
-	if (glance_view || heat_view) {
-		look();
-	}
-}, 400));
-
-editor.on("text-change", function() {
-	if (glance_view) {
-		unblur();
-	}
-	if (heat_view) {
-		// hide overlay
-		document.querySelector("#heatmap").style.opacity = 0;
-	}
-})
 

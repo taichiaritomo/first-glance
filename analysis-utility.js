@@ -139,7 +139,7 @@ function test_renderGS(imageArray, width, height) {
 	img.src = canvas.toDataURL('image/png');
 
 	// add image to body (or whatever you want to do)
-	document.body.querySelector("#test-display").appendChild(img);
+	document.body.appendChild(img);
 }
 
 
@@ -386,6 +386,6 @@ function drawOverlayRectangle(x, y, w, h) {
 	div.style.top = y;
 	div.style.width = w;
 	div.style.height = h;
-	document.querySelector("#overlay").appendChild(div);
+	document.querySelector("#rectangles").appendChild(div);
 	return div;
 }

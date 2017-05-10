@@ -7,62 +7,121 @@ var editor = new Quill("#editor", {
 });
 
 
-/* Set Initial Content */
-//editor.setContents([
-//	{
-//		insert: "D4.1 - Development Update",
-//		attributes: { bold: true }
-//	},
-//	{
-//		insert: "\n\n"
-//	},
-//	{
-//		insert: "Challenges\n",
-//		attributes: { italic: true }
-//	},
-//	{
-//		insert: "A simple linear string representation of text won’t suffice. I need to know the 2D position of "
-//	},
-//	{
-//		insert: "each sentence",
-//		attributes: { bold: true }
-//	},
-//	{
-//		insert: " on the page/screen. This is not so easily accessible in Java."
-//	},
-//	{
-//		insert: "\n\n"
-//	},
-//	{
-//		insert: "Platform\n",
-//		attributes: { italic: true }
-//	},
-//	{
-//		insert: "QuillJS - Rich Text Editor API"
-//	}
-//]);
-
-
 /* Testing shorter content */
 editor.setContents([
 	{
-		insert: "Title",
-		attributes: { size: "large" }
+		insert: ""
 	},
 	{
-		insert: "\n\n"
+		insert: "This is ",
+		attributes: { color: "#999999", italic: true, size: "large" }
 	},
 	{
-		insert: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+		insert: "Lookas",
+		attributes: { color: "#999999", bold: true, italic: true, size: "large" }
+	},
+	{
+		insert: "\na ",
+		attributes: { color: "#999999", bold: false, italic: true }
+	},
+	{
+		insert: "text-editing tool",
+		attributes: { color: "#999999", bold: true, italic: true }
+	},
+	{
+		insert: " that measures ",
+		attributes: { color: "#999999", italic: true }
+	},
+	{
+		insert: "visual saliency",
+		attributes: { color: "#999999", bold: true, italic: true }
+	},
+	{
+		insert: "\nto guide constructive thinking about information design.\n\nWhen we create written information, we can manipulate space, form, size, and color...which can be a lot to keep track of.\n\nSo Lookas shows you what stands out at first glance.",
+		attributes: { color: "#999999", italic: true }
 	}
 ]);
 
-//editor.setContents([
-//	{
-//		insert: "Hello! ",
-//		attributes: { bold: true }
-//	},
-//	{
-//		insert: "My name is Taichi."
+
+user_edited = false; // did user edit content yet?
+
+window.onload = function() {
+	document.querySelector(".ql-editor").focus();
+	editor.format("color", "black");
+	editor.format("italic", false);
+	document.querySelector(".heat").click();
+};
+
+/* Function called when test button is pressed */
+function glanceButtonHandler() {
+	// turn off heat view, if on
+	if (heat_view) {
+		document.querySelector(".heat").style.color = "black";
+		document.querySelector("#heatmap").style.opacity = 0;
+		heat_view = false;
+	}
+	
+	// switch glance_view
+	glance_view = !glance_view;
+	if (glance_view) {
+		document.querySelector(".eye").innerHTML = "&#9673;";
+		look();
+	} else {
+		document.querySelector(".eye").innerHTML = "&#9678;";
+		unblur();
+	}
+	
+//	naiveAttn();
+//	test_process();
+//	var s_map = look();
+}
+
+
+function heatButtonHandler() {
+	// turn off glance view, if on
+	if (glance_view) {
+		document.querySelector(".eye").innerHTML = "&#9678;";
+		unblur();
+		glance_view = false;
+	}
+	
+	// switch heat view
+	heat_view = !heat_view;
+	if (heat_view) {
+		document.querySelector(".heat").style.color = "rgb(255, 69, 0)";
+		look();
+	} else {
+		document.querySelector(".heat").style.color = "black";
+		document.querySelector("#heatmap").style.opacity = 0;
+	}
+}
+
+document.querySelector(".heat").onclick = heatButtonHandler;
+document.querySelector(".eye").onclick = glanceButtonHandler;
+
+
+
+/* EDITING EVENTS */
+
+editor.on("text-change", _.debounce(function() {
+	if (glance_view || heat_view) {
+		look();
+	}
+}, 400));
+
+editor.on("text-change", function(delta, oldDelta, source) {
+//	if (!user_edited) {
+//		user_edited = true;
+//		console.log(delta);
+//		editor.setContents(delta);
+//		editor.setSelection()
 //	}
-//]);
+//	
+	if (glance_view) {
+		unblur();
+	}
+	if (heat_view) {
+		// hide overlay
+		document.querySelector("#heatmap").style.opacity = 0;
+	}
+});

@@ -216,7 +216,7 @@ function test_complexExponential(re, im) {
  * @returns the average value of the pixels inside the given sampling area
  */
 function sampleMap(s_map, x, y, w, h) {
-	var mapSize = 64, // assuming map is square
+	var mapSize = 128, // assuming map is square
 		d = 8,
 		maxY = Math.ceil(y+h),
 		maxX = Math.ceil(x+w),
@@ -292,7 +292,7 @@ function test_saliency(img, width, height) {
 	
 	// Compute spectral residual by subtracting averaged log amplitude
 	var spectralResidual = test_elementwiseSubtract(logAmplitude, avgLogAmplitude);
-    // test_renderGS(spectralResidual, w, w);
+    test_renderGS(spectralResidual, w, w);
 	
 	var complexResult = test_complexExponential(spectralResidual, phase);
 	
