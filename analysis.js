@@ -1,40 +1,18 @@
-/* constants for formatting weights (naive) */
-var s_pt = 1; // plain text has a default strength of 1
-var s_i = 0.5; // italic attribute adds a strength of 0.5
-var s_b = 1; // bold attribute adds a strength of 1
-
-
 /* Text editor canvas size */
-var editorSize = 512; // updated on look(), assumes editor rasterization is square
+var editorSize = 512; // assumes text bitmap is square
 var mapSize = 128; // size of saliency map
 var downsample = editorSize / mapSize;
 
+var CONVOLUTION_FILTERS = {
+    AVG_3: [ [0.1111, 0.1111, 0.1111], [0.1111, 0.1111, 0.1111], [0.1111, 0.1111, 0.1111] ],
+    AVG_5: [ [0.04, 0.04, 0.04, 0.04, 0.04], [0.04, 0.04, 0.04, 0.04, 0.04], [0.04, 0.04, 0.04, 0.04, 0.04], [0.04, 0.04, 0.04, 0.04, 0.04], [0.04, 0.04, 0.04, 0.04, 0.04] ],
+    AVG_7: [ [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816], [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816], [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816], [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816], [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816], [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816], [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816] ]
+};
 
-/* Matrices for convolution */
-var AVG_3 = [ [0.1111, 0.1111, 0.1111],
-			  [0.1111, 0.1111, 0.1111],
-			  [0.1111, 0.1111, 0.1111] ];
+/* Hue of orange used for heatmap */
+//var HOT_ORANGE = { R: 255, G: 125, B: 0 };
 
-var AVG_5 = [ [0.04, 0.04, 0.04, 0.04, 0.04],
-			  [0.04, 0.04, 0.04, 0.04, 0.04],
-			  [0.04, 0.04, 0.04, 0.04, 0.04],
-			  [0.04, 0.04, 0.04, 0.04, 0.04],
-			  [0.04, 0.04, 0.04, 0.04, 0.04] ];
-
-var AVG_7 = [ [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
-			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
-			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
-			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
-			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
-			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816],
-			  [0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816, 0.02040816] ];
-
-
-
-var glance_view = false,
-	heat_view = false;
-
-// track session for knowing if saliency data is up to date
+// track session to know if saliency data is up to date
 var session = 0;
 
 
@@ -83,35 +61,36 @@ function look() {
 	
 	var ql = document.querySelector("#editor");
 	
-	var image = new Jimp(editorSize, editorSize);
-	var s_map = [];
+	var textImage = new Jimp(editorSize, editorSize);
 	
-	// rasterize text editor content, 
+    /* Retrieve current content from Quill editor for caching */
+    var currentText = editor.getContents();
+    
+	/* Rasterize text editor content */
 	domtoimage.toPixelData(ql, { bgcolor: "white" })
 	.then(function (data) {
-		image.bitmap.data = data; // dom image
-		// test_renderRGBA(image.bitmap.data, editorSize, editorSize); // render (testing)
-		image.resize(mapSize, mapSize); // resize
-        // test_renderRGBA(image.bitmap.data, mapSize, mapSize); // render (testing)
-		var gs = grayscale(image.bitmap.data, mapSize, mapSize); // convert to grayscale
-//		test_saliency(gs, mapSize, mapSize);
-		s_map = computeSaliency(gs, mapSize, mapSize); // compute saliency map
+		textImage.bitmap.data = data; // copy domtoimage data to Jimp
+        var textImageCopy = data.slice();
+        var heatmap = null;
 		
-		if (glance_view) {
-			blur(s_map);
-		} else if (heat_view) {
-			heat(s_map);
-		}
+        if (heat_view) {
+            textImage.resize(mapSize, mapSize); // downsample in Jimp
+            var gs = grayscale(textImage.bitmap.data, mapSize, mapSize); // convert to grayscale
+            var saliencyMap = computeSaliency(gs, mapSize, mapSize); // compute saliency map
+            heatmap = heat(saliencyMap); // render saliency map to hotplate
+        }
+        
+        V_CTRL.updateCurrent(currentText, textImageCopy, heatmap);
+    
+        /* test function calls */
+        // test_renderRGBA(image.bitmap.data, editorSize, editorSize); // render (testing)
+        // test_renderRGBA(image.bitmap.data, mapSize, mapSize); // render (testing)
+        // test_saliency(gs, mapSize, mapSize);
+    
+        /* Hotplate/Glance view handler */
+		// if (glance_view) { blur(s_map); }
+        // else if (heat_view) { heat(s_map); }
 	});
-}
-
-
-/* SalientNode object maps character index in editor to saliency of the text node
- * containing that character */
-function SalientNode(charIndex, saliency, area) {
-	this.charIndex = charIndex;
-	this.saliency = saliency;
-	this.area = area;
 }
 
 
@@ -120,7 +99,7 @@ function heat(s_map) {
 		l = mapSize*mapSize;
 	
 	// fill map bitmap data with colors from array
-	for(var i = 0; i<l; i++) {
+	for (var i = 0; i<l; i++) {
 		var i4 = i*4,
 			p = s_map[i],
 			adjusted_intensity = 255 * (p > 1 ? 1 : (p < 0 ? 0 : p));
@@ -131,29 +110,36 @@ function heat(s_map) {
 	}
 	
 	map.resize(editorSize, editorSize);
+	map.blur(8);
+    var pixels = map.bitmap.data;
 	
 	var canvas = document.querySelector("#heatmap"),
 		context = canvas.getContext("2d"),
 		imgData = context.createImageData(editorSize, editorSize);
-	
-	var pixels = map.bitmap.data;
-	
-	// fill imgData with colors from array
-	for(var i = 0; i < imgData.data.length; i+=4) {
+	// fill imgData with pixel data
+	for (var i = 0; i < imgData.data.length; i+=4) {
 		imgData.data[i]   = 255;
-		imgData.data[i+1] = 255 - 186*(pixels[i+1]/255);
-		imgData.data[i+2] = 255 - pixels[i+2];
+		imgData.data[i+1] = 255 - 130*(3*pixels[i+1]/255);
+		imgData.data[i+2] = 255 - 3*pixels[i+2];
 		imgData.data[i+3] = 255;
 	}
-	
 	context.putImageData(imgData, 0, 0);
 	
-//	document.querySelector("#overlay").style.opacity = 0.8;
 	document.querySelector("#heatmap").style.opacity = 1;
+    
+    return imgData; // return full-size heatmap data
 }
 
 
 
+
+/* SalientNode object maps character index in editor to saliency of the text node
+ * containing that character */
+function SalientNode(charIndex, saliency, area) {
+	this.charIndex = charIndex;
+	this.saliency = saliency;
+	this.area = area;
+}
 
 /* Applies saliency map contents to text editor nodes
  * @param s_map a 128x128 saliency map, given as an array of grayscale (0-1) values
@@ -163,9 +149,8 @@ function blur(s_map) {
 	// set up text shadow
 	var ancestor = document.querySelector(".ql-editor"),
 		descendents = ancestor.getElementsByTagName("*");
-	var i, e, d;
-	for (i = 0; i < descendents.length; ++i) {
-		e = descendents[i];
+	for (var i = 0; i < descendents.length; ++i) {
+		var e = descendents[i];
 		var color = e.style.color;
 		e.style.textShadow = "0 0 0 " + color;
 	}
@@ -179,7 +164,7 @@ function blur(s_map) {
 	
 	// for each text node
 	var qLines     = editor.getLines(0), // via Quill
-		c          = 0; // character index in editor
+        c          = 0; // character index in editor
 	
 	console.log(editor.getLines(0));
 //	console.log(editor.getLine(0));
@@ -197,11 +182,6 @@ function blur(s_map) {
 			continue;
 		}
 		console.log(qLines[i]);
-
-//  // backup for avoiding weird getLines bug that returns cache with no ops
-//	for (var i = 0; i < 1; i++) {
-//		var qLineContents = editor.getContents();
-//		console.log(qLineContents);
 		
 		// each operation in the Delta for the qLine corresponds to a text node
 		for (var j = 0; j < qLineContents.ops.length; j++) {
@@ -259,14 +239,12 @@ function blur(s_map) {
 					op.saliency = (op.area*op.saliency + a*s)/(op.area + a);
 					op.area += a;
 				}
-				// console.log(s);
 				
 				k += ll; // move forward character count by line length
 			}
 			
 			// record salient nodes with character, saliency, and area info
 			if (op.saliency > 0) {
-				// console.log("saliency: " + op.saliency);
 				salientNodes.push(new SalientNode(anchor, op.saliency, op.area));
 			}
 			
@@ -278,6 +256,34 @@ function blur(s_map) {
 	// console.log(salientNodes);
 	
 	
+    
+//    console.log("Salient Nodes: ");
+//    console.log(salientNodes);
+//    for (var i = 0; i < salientNodes.length; i++) {
+//        var n = salientNodes[i];
+//        
+//        var blot = editor.getLeaf(n.charIndex+1)[0],
+//            node = blot.domNode.parentNode,
+//            normalized = 0,
+//            blurRadius = 0;
+//        
+//        if (node.getAttribute("data-session") != session) {
+//            node.setAttribute("data-session", session);
+//            node.setAttribute("data-saliency", n.saliency);
+//            node.setAttribute("data-area", n.area);
+//        } else {
+//            console.log("yar");
+//            var s = node.getAttribute("data-saliency") * 1,
+//                a = node.getAttribute("data-area") * 1; // multiply by 1 to convert to number
+//            var avg = ((a*s + n.area*n.saliency)/(a+n.area));
+//            node.setAttribute("data-saliency", averaged);
+//			node.setAttribute("data-area", a+n.area);
+//        }
+//    }
+    
+    
+    
+    
 	
 	// Normalize aggregated saliency values on a 10-point scale and apply text rendering effects	
 	var minSaliency = Infinity,
@@ -316,8 +322,9 @@ function blur(s_map) {
 			normalized = Math.ceil(8*(n.saliency - minSaliency)/range);
 			blurRadius = (8 - normalized)/2;
 		} else {
-			var s = node.getAttribute("data-saliency")*1,
-				a = node.getAttribute("data-area")*1;
+            console.log("yar");
+			var s = node.getAttribute("data-saliency") * 1,
+				a = node.getAttribute("data-area") * 1; // multiply by 1 to convert to number
 			var averaged = ((a*s + n.area*n.saliency)/(a+n.area));
 			node.setAttribute("data-saliency", averaged);
 			node.setAttribute("data-area", a+n.area);
@@ -345,9 +352,4 @@ function unblur() {
 		e.style.textShadow = "0 0 0 " + color;
 	}
 }
-
-
-
-
-
 

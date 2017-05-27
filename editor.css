@@ -1,38 +1,103 @@
 body {
-/*	background-color: #f2f2f2;*/
 	background-color: #f2f2f2;
 	display: flex;
+    margin: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+}
+
+/*
+#super-container {
+    align-self: center;
+    margin: 0 auto 0 auto;
+    display: flex;
+}
+*/
+
+#task-info {
+    align-self: center;
+/*    background-color: #ffffff;*/
+/*    border-right: 1px solid #cccccc;*/
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 430px;
+/*    height: 687px;*/
+/*    padding: 20px 40px;*/
+    margin-left: 60px;
+    color: #000;
+    font-size: 17px;
+    line-height: 1.42;
+    overflow-y: scroll;
+    opacity: 0.2;
+    transition: width 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+#task-info:hover {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+#task-info h2 {
+    color: #666;
+}
+
+#task-info p {
+    color: #666;
+}
+
+#task-info dl {
+    color: #000;
+}
+
+#task-info strong {
+    font-weight: 400;
 }
 
 #container {
-/*
-	height: 100%;
-	max-height: 511px;
-	width: 100%;
-	max-width: 512px;
-*/
-	position: relative;
+/*	position: relative;*/
 	align-self: center;
 	width: 512px;
-	height: 553px;
 	margin: 0 auto 0 auto;
+/*    margin-left: 64px;*/
 }
 
 #toolbar {
 	background-color: white;
 	border: none;
 	border-bottom: 1px solid #f2f2f2;
-	position: absolute;
+/*	position: absolute;*/
 	width: 100%;
 	height: 41px;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 }
 
+.ql-picker {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
 #editor-container {
-	position: absolute;
+/*	position: absolute;*/
 	top: 41px;
 	width: 100%;
+    height: 512px;
+    overflow-y: hidden;
+}
+
+#overlay {
+	background-color: white;
+	position: absolute;
+	pointer-events: none;
+	opacity: 1;
+}
+
+#innershadow {
+	-webkit-box-shadow: inset 0 0 12px 5px white;
+    box-shadow:         inset 0 0 12px 5px white;
+	position: absolute;
+	width: 512px;
+	height: 512px;
+	pointer-events: none;
 }
 
 #editor {
@@ -41,67 +106,6 @@ body {
 	border: none;
 	border-bottom-left-radius: 4px;
 	border-bottom-right-radius: 4px;
-	overflow: hidden;
-}
-
-#innershadow {
-	-webkit-box-shadow: inset 0 0 12px 5px white;
-/*    box-shadow:         inset 0 0 20px blue;*/
-	position: absolute;
-	width: 512px;
-	height: 512px;
-	pointer-events: none;
-}
-
-/*
-#corner_top-left {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 15px;
-	height: 15px;
-	border-top: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-}
-
-#corner_top-right {
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 15px;
-	height: 15px;
-	border-top: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-}
-
-#corner_bottom-left {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: 15px;
-	height: 15px;
-	border-bottom: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-}
-
-#corner_bottom-right {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	width: 15px;
-	height: 15px;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-}
-*/
-
-
-#overlay {
-	background-color: white;
-	position: absolute;
-/*	top: 50px;*/
-	pointer-events: none;
-	opacity: 1;
 }
 
 #rectangles {
@@ -114,11 +118,10 @@ body {
 
 #heatmap {
 	opacity: 0;
-	transition: opacity 0.1s ease-in-out;
+	transition: opacity 0.2s ease-in-out;
 }
 
 .saliency-indicator {
-	font-family: sans-serif;
 	font-size: 10;
 	color: transparent;
 }
@@ -131,6 +134,7 @@ body {
 	font-family: 'Source Sans Pro', sans-serif;
 /*	background-color: white;*/
 	font-size: 17px;
+    overflow: hidden;
 }
 
 .ql-editor * {
@@ -138,10 +142,6 @@ body {
 	-moz-transition: text-shadow 0.1s ease-in-out;
 	-o-transition: text-shadow 0.1s ease-in-out;
 	transition: text-shadow 0.1s ease-in-out;
-}
-
-.ql-toolbar button {
-	cursor: default;
 }
 
 .eye-wrapper {
@@ -153,7 +153,127 @@ body {
 	line-height: 18px;
 }
 
-.heat {
+#hotplate-button {
 	font-size: 18px;
 	line-height: 18px;
+}
+
+#pin-button {
+    width: 28px;
+    height: 24px;
+    padding: 3px 5px;
+}
+
+#versions-container {
+    background-color: #f8f8f8;
+    position: relative;
+    width: 100%;
+    height: 130px;
+    border-top: 12px solid #f2f2f2;
+}
+
+#versions-list {
+/*    background-color: #e5e5e5;*/
+/*    border-top: 1px solid #f2f2f2;*/
+    display: flex;
+    flex-direction: row-reverse;
+    opacity: 0.2;
+    overflow-x: scroll;
+    transition: opacity 0.2s ease-in-out;
+}
+
+#versions-container:hover #versions-list {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.version-preview {
+    background-color: white;
+    position: relative;
+    width: 0px;
+    height: 130px;
+/*    overflow: hidden;*/
+    box-sizing: border-box;
+    border: 1px solid #fff;
+    border-left: 1px solid #f2f2f2;
+    cursor: pointer;
+    opacity: 0;
+    
+    transition: width 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+.version-preview:hover {
+    border: 1px solid #dddddd;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.version-preview.selected {
+    border: 1px solid #06c;
+    cursor: default;
+}
+
+.version-preview.inserted {
+    width: 130px;
+    opacity: 1;
+    transition: width 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+.version-preview-thumbnail {
+    width: 128px;
+    height: 128px;
+    pointer-events: none;
+}
+
+.version-preview-label {
+    position: absolute;
+    bottom: 2px;
+    left: 6px;
+    color: #999;
+    font-weight: 800;
+    pointer-events: none;
+}
+
+.version-preview.selected .version-preview-label {
+    color: #06c;
+}
+
+#versions-helptext {
+    background: linear-gradient(to right, rgba(248,248,248,255), rgba(248,248,248,0));
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 216px;
+    height: 120px;
+    padding-left: 15px;
+    padding-top: 10px;
+    color: #999999;
+    font-size: 14px;
+    text-shadow: 0 0 1px #fff;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/*
+#versions-container:hover #versions-helptext.fade {
+    opacity: 0.5;
+    transition: opacity 0.2s ease-in-out;
+}
+*/
+
+#versions-container:hover #versions-helptext.hide {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+#versions-helptext #pin-icon-gray {
+    display: inline-block;
+    margin-left: 2px;
+    margin-right: 0px;
+    vertical-align: top;
+    width: 15px;
+    height: 15px;
+    background-image: url(img/pin_999.svg);
+    background-size: 15px 15px;
 }

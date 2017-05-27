@@ -27,7 +27,19 @@
 <!-- FFT -->
 <script src="custom_fft.js"></script>
 
+<!--<div id="super-container">-->
 
+<!-- Task Info -->
+<div id="task-info">
+    <div>
+    <h2>The Task</h2>
+    <p>Imagine that you are a volunteer for NYC, and you have been tasked with designing a <strong>square info-card</strong> that summarizes some information on SNAP, a food benefits program. The information you are given is kind of in a raw form—just a bunch of notes, really:</p>
+    <dl>Supplemental Nutrition Assistance Program (SNAP)<br>SNAP (formerly known as food stamps) helps low-income individuals and families afford nutritious food. To apply online, use ACCESS HRA, where you can create an account and check if you are eligible for benefits. You can also receive a paper application by visiting a SNAP center or calling the Infoline at 718-557-1399. The application process may take up to a month. If you are currently waiting on your application, you can check the status of your case at a SNAP center. If you already get SNAP, you can check your EBT card balance and your time limit online at ACCESS HRA.</dl>
+    <p>In this activity, we would like you to take <strong>5 minutes</strong> to spruce this up—<strong>organize and format</strong> this information in a way that is <strong>easy to use, read, and navigate</strong> by using space, text size, color, bold, etc. You can change the wording, but make sure to include all the original information!</p>
+<!--    <button>Start</button>-->
+    </div>
+    
+</div>
 
 <!-- Editor Area -->
 <div id="container">
@@ -44,14 +56,14 @@
 		<select class="ql-size">
 			<option value="small"></option>
 			<!-- Note a missing, thus falsy value, is used to reset to default -->
-			<option selected></option> 
+			<option selected value="normal"></option> 
 			<option value="large"></option>
 			<option value="huge"></option>
 		</select>
 		
 		<div>
 			<select class="ql-color">
-				<option selected="selected"></option>
+				<option selected value="#000000"></option>
 				<option value="#666666"></option>
 				<option value="#999999"></option>
 				<option value="#cccccc"></option>
@@ -61,8 +73,13 @@
 		</div>
 		
 		<div class="eye-wrapper">
-			<button title="Heat View" class="heat" alt="Hotplate view">&#9832;</button>
-			<button title="Glance View" class="eye" alt="Glance view">&#9678;</button>
+            <button title="Pin Version" id="pin-button" alt="Pin this version">
+                <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <path class="ql-fill" d="M5.7713326,8.01820399 L6.55308438,2.54594155 L5.69594152,2.54594155 L5.69594152,0.545941546 L10.6959415,0.545941546 L10.6959415,2.54594155 L9.83879867,2.54594155 L10.6205504,8.01820399 C11.8687267,8.55142186 12.6959415,9.48427958 12.6959415,10.5459415 L3.69594152,10.5459415 C3.69594152,9.48427958 4.52315635,8.55142186 5.7713326,8.01820399 Z M7.69594152,10.5459415 L8.69594152,10.5459415 L8.69594152,15.5459415 L7.69594152,15.5459415 L7.69594152,10.5459415 Z M8.19594152,18.5459415 L7.69594152,15.5459415 L8.69594152,15.5459415 L8.19594152,18.5459415 Z" transform="translate(8.195942, 9.545942) rotate(45.000000) translate(-8.195942, -9.545942) "></path>
+                </svg>
+            </button>
+			<button title="Heat View" id="hotplate-button" alt="Hotplate view">&#9832;</button>
+<!--			<button title="Glance View" class="eye" alt="Glance view">&#9678;</button>-->
 		</div>
 	</div>
 	
@@ -86,8 +103,25 @@
 		<div id="rectangles">
 		</div>
 	</div>
+    
+    <div id="versions-container">
+        <div id="versions-list">
+            <div class="version-preview inserted" id="version-current">
+                <canvas class="version-preview-thumbnail"></canvas>
+                <div class="version-preview-label">Current</div>
+            </div>
+        </div>
+        <div id="versions-helptext" class="fade">
+            <strong>Versions</strong><br>
+            Use the <div id="pin-icon-gray"></div> Pin button to save a version of your note here.<br><br>
+            Click to toggle between a pinned version and the current one.
+        </div>
+    </div>
 
 </div>
+
+<!--</div>-->
+
 
 
 <!-- Test Display -->
@@ -104,11 +138,15 @@
 <!-- Utility script for analysis -->
 <script src="analysis-utility.js"></script>
 
-<!-- Initialize Quill editor -->
-<script src="editor.js"></script>
-
 <!-- Saliency -->
 <script src="saliency.js"></script>
 
+<!-- Version Controller -->
+<script src="versions.js"></script>
+
 <!-- Script for analysis -->
+<script src="blur2.js"></script>
 <script src="analysis.js"></script>
+
+<!-- Initialize Quill editor -->
+<script src="editor.js"></script>

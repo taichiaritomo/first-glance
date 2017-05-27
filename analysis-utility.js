@@ -104,7 +104,7 @@ function test_renderRGBA(imageArray, width, height) {
 	img.src = canvas.toDataURL('image/png');
 
 	// add image to body (or whatever you want to do)
-	document.body.querySelector("#test-display").appendChild(img);
+	document.body.querySelector("#editor-container").appendChild(img);
 }
 
 /* Render grayscale (0-1) image array data in test canvas */

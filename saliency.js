@@ -342,7 +342,7 @@ function computeSaliency(img, w, h) {
 	
 	var logAmplitude = SpectrumRenderer.render(re, im, true); // Get log spectrum
 	var phase = test_phaseAngle(re, im); // Get phase angle
-	var avgLogAmplitude = convolution(logAmplitude, w, w, AVG_5, false); // Convolute logAmplitude with average-filter
+	var avgLogAmplitude = convolution(logAmplitude, w, w, CONVOLUTION_FILTERS.AVG_5, false); // Convolute logAmplitude with average-filter
 	var spectralResidual = test_elementwiseSubtract(logAmplitude, avgLogAmplitude); // Compute spectral residual by subtracting averaged log amplitude
 	var complexExp = test_complexExponential(spectralResidual, phase);
 	
