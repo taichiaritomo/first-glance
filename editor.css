@@ -3,62 +3,153 @@ body {
 	display: flex;
     margin: 0;
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: 14px;
+    font-size: 17px;
 }
 
-/*
-#super-container {
-    align-self: center;
-    margin: 0 auto 0 auto;
-    display: flex;
+.experiment h2 {
+    color: #666;
 }
-*/
 
-#task-info {
+.experiment p {
+    color: #666;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.experiment p.experiment-hide {
+    opacity: 0;
+}
+
+.experiment button {
+    background-color: #f8f8f8;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 17px;
+    color: #666;
+}
+
+.experiment button:hover {
+    border: 1px solid #ccc;
+}
+
+#experiment-info {
     align-self: center;
-/*    background-color: #ffffff;*/
-/*    border-right: 1px solid #cccccc;*/
     border-radius: 4px;
     box-sizing: border-box;
-    width: 430px;
-/*    height: 687px;*/
-/*    padding: 20px 40px;*/
-    margin-left: 60px;
+    width: 470px;
+    margin-left: 40px;
     color: #000;
     font-size: 17px;
     line-height: 1.42;
     overflow-y: scroll;
-    opacity: 0.2;
-    transition: width 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    opacity: 1;
 }
 
-#task-info:hover {
+#experiment-info.fade {
+    opacity: 0.3;
+    transition: opacity 0.2s ease-in-out;
+}
+
+#experiment-info.fade:hover {
     opacity: 1;
     transition: opacity 0.2s ease-in-out;
 }
 
-#task-info h2 {
-    color: #666;
+#intro-text {
+    padding: 20px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }
 
-#task-info p {
-    color: #666;
+#intro-text.experiment-hide {
+    opacity: 0;
 }
 
-#task-info dl {
-    color: #000;
+#task-text {
+    display: none;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
 }
 
-#task-info strong {
-    font-weight: 400;
+#task-text.experiment-show {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }
+
+#task-text.experiment-hide {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#task-text p {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+}
+
+.next-button {
+    color: #06c;
+    height: 0;
+    cursor: default;
+}
+
+.next-button:hover {
+    text-decoration: underline;
+}
+
+#task-time-container {
+/*    background-color: #f8f8f8;*/
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-right: 12px;
+    width: 160px;
+}
+
+#task-time-container.experiment-hide {
+    display: none;
+    visibility: hidden;
+}
+
+#task-done-button.experiment-hide {
+    display: none;
+    visibility: hidden;
+}
+
+#final-text {
+    display: none;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#final-text.experiment-show {
+    opacity: 1;
+}
+
+
+
+
 
 #container {
 /*	position: relative;*/
 	align-self: center;
 	width: 512px;
 	margin: 0 auto 0 auto;
-/*    margin-left: 64px;*/
+    opacity: 1;
+    transition: opacity 0.1s ease-in-out;
+}
+
+#container.experiment-disable {
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#container.experiment-hide {
+    opacity: 0;
 }
 
 #toolbar {
@@ -76,7 +167,18 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+/*
+.ql-picker-options {
+    width: 120px;
+}
+*/
+
+.ql-snow .ql-color-picker .ql-picker-options {
+    width: 92px;
+}
+
 #editor-container {
+    background-color: white;
 /*	position: absolute;*/
 	top: 41px;
 	width: 100%;
@@ -89,6 +191,7 @@ body {
 	position: absolute;
 	pointer-events: none;
 	opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }
 
 #innershadow {
@@ -230,6 +333,7 @@ body {
     bottom: 2px;
     left: 6px;
     color: #999;
+    font-size: 14px;
     font-weight: 800;
     pointer-events: none;
 }

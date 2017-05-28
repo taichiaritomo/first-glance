@@ -29,20 +29,72 @@
 
 <!--<div id="super-container">-->
 
+<!-- Intro section -->
+<!--
+<div id="intro" class="experiment">
+    <div id="intro-text">
+    </div>
+</div>
+-->
+
 <!-- Task Info -->
-<div id="task-info">
-    <div>
-    <h2>The Task</h2>
-    <p>Imagine that you are a volunteer for NYC, and you have been tasked with designing a <strong>square info-card</strong> that summarizes some information on SNAP, a food benefits program. The information you are given is kind of in a raw form—just a bunch of notes, really:</p>
-    <dl>Supplemental Nutrition Assistance Program (SNAP)<br>SNAP (formerly known as food stamps) helps low-income individuals and families afford nutritious food. To apply online, use ACCESS HRA, where you can create an account and check if you are eligible for benefits. You can also receive a paper application by visiting a SNAP center or calling the Infoline at 718-557-1399. The application process may take up to a month. If you are currently waiting on your application, you can check the status of your case at a SNAP center. If you already get SNAP, you can check your EBT card balance and your time limit online at ACCESS HRA.</dl>
-    <p>In this activity, we would like you to take <strong>5 minutes</strong> to spruce this up—<strong>organize and format</strong> this information in a way that is <strong>easy to use, read, and navigate</strong> by using space, text size, color, bold, etc. You can change the wording, but make sure to include all the original information!</p>
-<!--    <button>Start</button>-->
+<div id="experiment-info" class="experiment">
+    <div id="intro-text">
+        <h2>Hello!</h2>
+        <p>
+            As part of a research study on perception and visual design, you will
+            be participating in a 10-minute activity and follow-up survey.<br><br>
+            Please use <strong>Google Chrome</strong> in Full Screen mode and make sure you have
+            at least 1280x800 of screen space.<br><br>
+        </p>
+        <button id="intro-continue">Continue</button>
+    </div>
+    <div id="task-text">
+        <p>
+            Imagine that you are a volunteer for the DMV (Dept. of Motor Vehicles)
+            in the city of Whitesville. You have been tasked with designing a square
+            info-card that will be given to patrons who have just arrived at the
+            DMV center. The goal is to help patrons quickly figure
+            out where to go and what to do—to make the whole place less hectic.
+            <span id="next-1" class="next-button"><br><br>Keep reading...</span>
+        </p>
+        <p id="next-1-target" class="experiment-hide">
+            We have started you off with the version that you see in the
+            text-editor. We would like you to take 10 minutes to spruce
+            it up. Make it quick and easy for people to use and
+            read, using space, size, color, bold, etc. You can rearrange the
+            wording and structure, but make sure to include all the given
+            information.<br><br>
+            Behind the text, you'll see orange spots. The orange represents
+            <em>visual saliency</em>, or the tendency for visual attention to be attracted
+            to that location. As you make changes, the text-editor predicts what
+            areas attract the most visual attention. Use this feedback to assess
+            your edits.<br><br>
+            Once you have familiarized yourself with the task, press
+            the button to start editing!<br><br><br>
+            <button id="task-start-button">Start editing</button>
+            <span id="task-time-container" class="experiment-hide">Time remaining: <span id="task-time-remaining">10:00</span></span>
+            <button id="task-done-button" class="experiment-hide">I finished early</button>
+        </p>
+    </div>
+    <div id="final-text">
+        <h2>Almost Done!</h2>
+        <p>
+            <strong>One last thing</strong><br>
+            <a href="" id="text-image-download">Click here</a> to download an image of your final work. Then, submit it
+            at <a href="https://goo.gl/forms/hyU5vJET7tTGGFdZ2" target="_blank">this Google form</a>, along with some short survey responses.
+            <br><br><br>
+            If you have any questions about the study,
+            please let me know at <u>taichiaritomo@gmail.com</u>
+            <br><br><br>
+            Thank you so much for participating!
+        </p>
     </div>
     
 </div>
 
 <!-- Editor Area -->
-<div id="container">
+<div id="container" class="experiment-disable experiment-hide">
 
 	<!-- Toolbar container -->
 	<div id="toolbar">
@@ -150,3 +202,6 @@
 
 <!-- Initialize Quill editor -->
 <script src="editor.js"></script>
+
+<!-- Include experiment script -->
+<script src="experiment_a.js"></script>
