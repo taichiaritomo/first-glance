@@ -4,19 +4,39 @@ editor.setContents([
     }
 ]);
 
-var experiment_use_hotplate = true;
+
+function getURLParameter(theParameter) { 
+  var params = window.location.search.substr(1).split('&');
+ 
+  for (var i = 0; i < params.length; i++) {
+    var p=params[i].split('=');
+	if (p[0] == theParameter) {
+	  return decodeURIComponent(p[1]);
+	}
+  }
+  return false;
+}
+
+
+var experiment_use_hotplate = false;
+var experimentGroup = getURLParameter("group");
+if (experimentGroup == "a") {
+    experiment_use_hotplate = true;
+}
 
 window.onload = function() {
 //	document.querySelector(".ql-editor").focus();
     if (experiment_use_hotplate) {
         document.querySelector("#hotplate-button").click();
+        document.querySelector("#survey-form-link").href = "https://goo.gl/forms/hyU5vJET7tTGGFdZ2";
     } else {
+        look();
         document.querySelector("#hotplate-button").style.display = "none";
+        document.querySelector("#visual-saliency-explainer").style.display = "none";
+        document.querySelector("#survey-form-link").href = "https://goo.gl/forms/o53yYWXWg0lHhei62";
     }
 //    editor.disable();
 };
-
-
 
 
 
