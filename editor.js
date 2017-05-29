@@ -1,7 +1,17 @@
 /* Initialize Quill Editor */
 var editor = new Quill("#editor", {
 	modules: {
-		toolbar: "#toolbar"
+		toolbar: "#toolbar",
+        keyboard: {
+          bindings: {
+            tab: {
+              key: 9,
+              handler: function() {
+                // do nothing
+              }
+            }
+          }
+        }
 	},
     scrollingContainer: "#editor-container",
 	theme: "snow"

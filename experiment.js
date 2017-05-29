@@ -1,6 +1,6 @@
 editor.setContents([
     {
-        insert: "Whitesville DMV\nDepartment of Motor Vehicles\n\nLicenses / Permits\nSee Desks 1-3 to renew or replace your driver's license. Please have your 6-point ID ready when you reach the desk. You can also renew your license by a mail-in form that you can get at the front desk.\nSee Desk 4 to schedule a road or permit test. If you are taking a permit test, check in at the Testing Center downstairs. Road tests are conducted at the Springfield DMV.\n\nVehicle\nSee Desks 5-6 for vehicle ownership and registration issues. You can also renew your registration, pay tickets, and order license plates online at www.state.nj.us/mvc\n\nIf your issue is not listed here, ask the front desk for information."
+        insert: "Whitesville DMV\nDepartment of Motor Vehicles\n\nLicenses / Permits\nSee Desks 1-3 to renew or replace your driver's license. Please have your 6-point ID ready before you reach the desk. You can also renew your license by filling out a mail-in form that you can get at the front desk.\nSee Desk 4 to schedule a road or permit test. If you are taking a permit test, check in at the Testing Center downstairs. Road tests are conducted at the Springfield DMV.\n\nVehicle\nSee Desks 5-6 for vehicle ownership and registration issues. You can also renew your registration, pay tickets, and order license plates online at www.state.nj.us/mvc\n\nIf your issue is not listed here, ask the front desk for information."
     }
 ]);
 
