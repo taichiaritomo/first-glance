@@ -22,6 +22,8 @@ var experiment_use_hotplate = false;
 var experimentGroup = getURLParameter("group");
 if (experimentGroup == "a") {
     experiment_use_hotplate = true;
+} else if (experimentGroup == "random") {
+    experiment_use_hotplate = (Math.random() >= 0.5);
 }
 
 window.onload = function() {
