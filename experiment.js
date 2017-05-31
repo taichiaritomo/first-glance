@@ -30,12 +30,18 @@ window.onload = function() {
 //	document.querySelector(".ql-editor").focus();
     if (experiment_use_hotplate) {
         document.querySelector("#hotplate-button").click();
-        document.querySelector("#survey-form-link").href = "https://goo.gl/forms/hyU5vJET7tTGGFdZ2";
+        // rutgers google form
+        // document.querySelector("#survey-form-link").href = "https://goo.gl/forms/hyU5vJET7tTGGFdZ2";
+        // cognito forms form
+        document.querySelector("#survey-form-link").href = "https://www.cognitoforms.com/RutgersUniversity2/FollowupSurveyGroupA";
     } else {
         look();
         document.querySelector("#hotplate-button").style.display = "none";
         document.querySelector("#visual-saliency-explainer").style.display = "none";
-        document.querySelector("#survey-form-link").href = "https://goo.gl/forms/o53yYWXWg0lHhei62";
+        // rutgers google form
+        // document.querySelector("#survey-form-link").href = "https://goo.gl/forms/o53yYWXWg0lHhei62";
+        // cognito forms form
+        document.querySelector("#survey-form-link").href = "https://www.cognitoforms.com/RutgersUniversity2/FollowupSurveyGroupB";
     }
 //    editor.disable();
 };
