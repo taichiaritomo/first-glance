@@ -66,14 +66,15 @@ function look() {
     /* Retrieve current content from Quill editor for caching */
     var currentText = editor.getContents();
     
-	/* Rasterize text editor content */
-	domtoimage.toPixelData(ql, { bgcolor: "white" })
-	.then(function (data) {
-		textImage.bitmap.data = data; // copy domtoimage data to Jimp
+    /* Rasterize text editor content */
+    html2canvas(ql, { bgcolor: "white", scale: 1 })
+    .then(function (canvas) {
+        var data = canvas.getContext("2d").getImageData(0,0,canvas.width, canvas.height).data;
+        textImage.bitmap.data = data;
         var textImageCopy = data.slice();
         var heatmap = null;
-		
-        if (heat_view) {
+        
+        if (heat_view) {githu
             textImage.resize(mapSize, mapSize); // downsample in Jimp
             var gs = grayscale(textImage.bitmap.data, mapSize, mapSize); // convert to grayscale
             var saliencyMap = computeSaliency(gs, mapSize, mapSize); // compute saliency map
@@ -81,7 +82,7 @@ function look() {
         }
         
         V_CTRL.updateCurrent(currentText, textImageCopy, heatmap);
-    
+        
         /* test function calls */
         // test_renderRGBA(image.bitmap.data, editorSize, editorSize); // render (testing)
         // test_renderRGBA(image.bitmap.data, mapSize, mapSize); // render (testing)
@@ -90,7 +91,7 @@ function look() {
         /* Hotplate/Glance view handler */
 		// if (glance_view) { blur(s_map); }
         // else if (heat_view) { heat(s_map); }
-	});
+    });
 }
 
 
