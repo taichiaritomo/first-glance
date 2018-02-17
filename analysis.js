@@ -44,15 +44,6 @@ function test_process() {
 }
 
 
-
-
-
-
-
-
-
-
-
 /* Rasterizes editor contents
  * @returns the saliency map (128x128), represented as an array of grayscale (0-1) values
  */
@@ -74,7 +65,7 @@ function look() {
         var textImageCopy = data.slice();
         var heatmap = null;
         
-        if (heat_view) {githu
+        if (heat_view) {
             textImage.resize(mapSize, mapSize); // downsample in Jimp
             var gs = grayscale(textImage.bitmap.data, mapSize, mapSize); // convert to grayscale
             var saliencyMap = computeSaliency(gs, mapSize, mapSize); // compute saliency map
