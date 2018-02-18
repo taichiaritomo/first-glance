@@ -1,54 +1,120 @@
 body {
 	background-color: #f2f2f2;
 	display: flex;
+    justify-content: center;
     margin: 0;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-size: 17px;
+    min-width: 1024px;
+}
+
+#main {
+    display: flex;
+    width: 1026px;
+    margin-top: -20px;
 }
 
 #container {
-/*	position: relative;*/
 	align-self: center;
 	width: 512px;
-	margin: 0 auto 0 auto;
+	border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     opacity: 1;
     transition: opacity 0.1s ease-in-out;
 }
 
 #toolbar {
-	background-color: white;
+	background-color: #f2f2f2;
 	border: none;
-	border-bottom: 1px solid #f2f2f2;
+    border-bottom: 1px solid #ccc;
 /*	position: absolute;*/
-	width: 100%;
+	width: 512px;
 	height: 41px;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
 }
 
 .ql-picker {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Rubik', sans-serif;
 }
 
 .ql-snow .ql-color-picker .ql-picker-options {
     width: 92px;
 }
 
+.ql-snow.ql-toolbar button:hover,
+.ql-snow .ql-toolbar button:hover,
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active,
+.ql-snow.ql-toolbar .ql-picker-label:hover,
+.ql-snow .ql-toolbar .ql-picker-label:hover,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active,
+.ql-snow.ql-toolbar .ql-picker-item:hover,
+.ql-snow .ql-toolbar .ql-picker-item:hover,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+  color: #0000ff;
+}
+.ql-snow.ql-toolbar button:hover .ql-fill,
+.ql-snow .ql-toolbar button:hover .ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-fill,
+.ql-snow .ql-toolbar button.ql-active .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+.ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
+  fill: #0000ff;
+}
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow .ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+.ql-snow.ql-toolbar button:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar button:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
+  stroke: #0000ff;
+}
+
 #editor-container {
     background-color: white;
 /*	position: absolute;*/
 	top: 41px;
-	width: 100%;
+	width: 512px;
     height: 512px;
     overflow-y: hidden;
-}
-
-#overlay {
-	background-color: white;
-	position: absolute;
-	pointer-events: none;
-	opacity: 1;
-    transition: opacity 0.5s ease-in-out;
 }
 
 #innershadow {
@@ -64,8 +130,6 @@ body {
 	height: 512px;
 	width: 512px;
 	border: none;
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
 }
 
 #rectangles {
@@ -76,11 +140,6 @@ body {
 	margin-right: 1px;
 }
 
-#heatmap {
-	opacity: 0;
-	transition: opacity 0.2s ease-in-out;
-}
-
 .saliency-indicator {
 	font-size: 10;
 	color: transparent;
@@ -88,12 +147,14 @@ body {
 
 .saliency-indicator:hover {
 	color: mediumblue;
+    color: #06c;
 }
 
 .ql-editor {
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Rubik', sans-serif;
 /*	background-color: white;*/
-	font-size: 17px;
+	font-size: 18px;
+    padding: 24px;
     overflow: hidden;
 }
 
@@ -125,6 +186,8 @@ body {
 }
 
 #versions-container {
+    display: none;
+    
     background-color: #f8f8f8;
     position: relative;
     width: 100%;
@@ -230,4 +293,138 @@ body {
     height: 15px;
     background-image: url(img/pin_999.svg);
     background-size: 15px 15px;
+}
+
+
+
+#heatmap-container {
+    align-self: center;
+	width: 512px;
+    height: 553px;
+	border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+#heatmap-toolbar {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    width: 512px;
+    height: 40px;
+}
+
+#viewing-distance-wrapper {
+    float: right;
+    font-size: 14px;
+    color: #444;
+    display: flex;
+    align-items: center;
+    padding-top: 12px;
+    padding-right: 12px;
+}
+
+#viewing-distance-setting {
+    margin-left: 4px;
+    cursor: pointer;
+    width: 52px;
+    position: relative;
+}
+
+#viewing-distance-setting:hover {
+    color: #0000ff;
+}
+
+#viewing-distance-num {
+    float: right;
+    margin-right: 20px;
+    display: inline-block;
+}
+
+#viewing-distance-icon-container {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+}
+
+.viewing-distance-icon {
+    border: 1px solid #acacac;
+    border-radius: 1px;
+}
+
+#viewing-distance-setting:hover .viewing-distance-icon.selected {
+    border: 1px solid #0000ff;
+}
+
+.viewing-distance-icon.selected {
+    border: 1px solid #444;
+}
+
+.viewing-distance-icon-32 {
+    position: absolute;
+    margin: 4px;
+    width: 4px;
+    height: 4px;
+}
+
+.viewing-distance-icon-64 {
+    position: absolute;
+    margin: 2px;
+    width: 8px;
+    height: 8px;
+}
+
+.viewing-distance-icon-128 {
+    position: absolute;
+    margin: 0;
+    width: 12px;
+    height: 12px;
+}
+
+#overlay {
+	background-color: black;
+	position: absolute;
+	pointer-events: none;
+	opacity: 1;
+    cursor: crosshair;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#heatmap {
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+}
+
+#heatmap {
+    cursor: crosshair;
+}
+
+#info-container {
+    display:none;
+    position: absolute;
+    background-color: rgba(242, 242, 242, 0.2);
+    width: 100%;
+    height: 100%;
+}
+
+#colophon {
+    position: absolute;
+    width: 1024px;
+    text-align: center;
+    bottom: 30px;
+    color: #999;
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+#colophon a {
+    color: #999;
+    text-decoration: none;
+}
+
+#colophon a:hover {
+    color: #999;
+    text-decoration: underline;
 }

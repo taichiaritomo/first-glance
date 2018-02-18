@@ -1,6 +1,6 @@
 /* Text editor canvas size */
 var editorSize = 512; // assumes text bitmap is square
-var mapSize = 128; // size of saliency map
+var mapSize = 64; // size of saliency map
 var downsample = editorSize / mapSize;
 
 var CONVOLUTION_FILTERS = {
@@ -72,7 +72,8 @@ function look() {
             heatmap = heat(saliencyMap); // render saliency map to hotplate
         }
         
-        V_CTRL.updateCurrent(currentText, textImageCopy, heatmap);
+        /* Version control updater */
+        // V_CTRL.updateCurrent(currentText, textImageCopy, heatmap);
         
         /* test function calls */
         // test_renderRGBA(image.bitmap.data, editorSize, editorSize); // render (testing)
@@ -102,7 +103,7 @@ function heat(s_map) {
 	}
 	
 	map.resize(editorSize, editorSize);
-	map.blur(8);
+	map.blur(2);
     var pixels = map.bitmap.data;
 	
 	var canvas = document.querySelector("#heatmap"),
@@ -110,9 +111,13 @@ function heat(s_map) {
 		imgData = context.createImageData(editorSize, editorSize);
 	// fill imgData with pixel data
 	for (var i = 0; i < imgData.data.length; i+=4) {
-		imgData.data[i]   = 255;
-		imgData.data[i+1] = 255 - 130*(3*pixels[i+1]/255);
-		imgData.data[i+2] = 255 - 3*pixels[i+2];
+//		imgData.data[i]   = 255;
+//		imgData.data[i+1] = 255 - 130*(3*pixels[i+1]/255);
+//		imgData.data[i+2] = 255 - 3*pixels[i+2];
+//		imgData.data[i+3] = 255;
+        imgData.data[i]   = 1.2*pixels[i];
+		imgData.data[i+1] = 1.2*pixels[i+1];
+		imgData.data[i+2] = 1.2*pixels[i+2];
 		imgData.data[i+3] = 255;
 	}
 	context.putImageData(imgData, 0, 0);
@@ -159,11 +164,6 @@ function blur(s_map) {
         c          = 0; // character index in editor
 	
 	console.log(editor.getLines(0));
-//	console.log(editor.getLine(0));
-//	console.log(editor.getLeaf(0));
-//	console.log(editor.getContents(0));
-	
-//	console.log(qLines);
 	
 	// Sample saliency for each line/op in editor
 	for (var i = 0; i < qLines.length; i++) {
