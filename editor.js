@@ -1,3 +1,10 @@
+/* Quill toolbar options */
+//var toolbarOptions = [
+//    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+//    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+//    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+//];
+
 /* Initialize Quill Editor */
 var editor = new Quill("#editor", {
 	modules: {
@@ -13,6 +20,7 @@ var editor = new Quill("#editor", {
           }
         }
 	},
+    formats: ["background", "bold", "color", "italic", "size", "underline", "align"],
     scrollingContainer: "#editor-container",
 	theme: "snow"
 });
@@ -56,61 +64,17 @@ var editor = new Quill("#editor", {
 
 
 
-var glance_view = false,
-	heat_view = false;
-
-
-function heatButtonHandler() {
-	// turn off glance view, if on
-	if (glance_view) {
-		document.querySelector(".eye").innerHTML = "&#9678;";
-		unblur();
-		glance_view = false;
-	}
-	
-	// switch heat view
-	heat_view = !heat_view;
-	if (heat_view) {
-		document.querySelector("#hotplate-button").style.color = "rgb(255, 69, 0)";
-		look();
-	} else {
-		document.querySelector("#hotplate-button").style.color = null;
-		document.querySelector("#heatmap").style.opacity = 0;
-	}
+var heat_view = true;
+window.onload = function() {
+    look();
+    editor.setSelection(115, 0);
 };
-
-document.querySelector("#hotplate-button").onclick = heatButtonHandler;
-
-
-/* Function called when test button is pressed */
-//function glanceButtonHandler() {
-//	// turn off heat view, if on
-//	if (heat_view) {
-//		document.querySelector(".heat").style.color = "black";
-//		document.querySelector("#heatmap").style.opacity = 0;
-//		heat_view = false;
-//	}
-//	
-//	// switch glance_view
-//	glance_view = !glance_view;
-//	if (glance_view) {
-//		document.querySelector(".eye").innerHTML = "&#9673;";
-//		look();
-//	} else {
-//		document.querySelector(".eye").innerHTML = "&#9678;";
-//		unblur();
-//	}
-//}
-
-//document.querySelector(".eye").onclick = glanceButtonHandler;
-
-
 
 /* EDITING EVENTS */
 
 var debouncedLook = _.debounce(function() {
     look();
-}, 200);
+}, 300);
 
 editor.on("text-change", function(delta, oldDelta, source) {
     if (source == "user") {
@@ -118,11 +82,49 @@ editor.on("text-change", function(delta, oldDelta, source) {
     }
 });
 
-editor.on("text-change", function(delta, oldDelta, source) {
-//	if (glance_view && source == "user") {
-//		unblur();
-//	}
-	if (heat_view && source == "user") {
-		document.querySelector("#heatmap").style.opacity = 0; // hide overlay
-	}
+
+var view_distance_setting = document.querySelector("#viewing-distance-setting");
+var view_distance_num = document.querySelector("#viewing-distance-num");
+var view_distance_icon_32 = document.querySelector(".viewing-distance-icon-32");
+var view_distance_icon_64 = document.querySelector(".viewing-distance-icon-64");
+var view_distance_icon_128 = document.querySelector(".viewing-distance-icon-128");
+var view_distance = "1.0m"; // default view distance
+
+function toggleViewDistance() {
+    if (view_distance == "0.5m") {
+        view_distance = "1.0m";
+        mapSize = 64;
+        view_distance_num.textContent = "1.0m";
+        view_distance_icon_128.classList.remove("selected");
+        view_distance_icon_64.classList.add("selected");
+        look();
+    } else if (view_distance == "1.0m") {
+        view_distance = "2.0m";
+        mapSize = 32;
+        view_distance_num.textContent = "2.0m";
+        view_distance_icon_64.classList.remove("selected");
+        view_distance_icon_32.classList.add("selected");
+        look();
+    } else if (view_distance == "2.0m") {
+        view_distance = "0.5m";
+        mapSize = 128;
+        view_distance_num.textContent = "0.5m";
+        view_distance_icon_32.classList.remove("selected");
+        view_distance_icon_128.classList.add("selected");
+        look();
+    }
+}
+
+view_distance_setting.addEventListener("click", function() {
+    toggleViewDistance();
 });
+
+//editor.on("text-change", function(delta, oldDelta, source) {
+////	if (glance_view && source == "user") {
+////		unblur();
+////	}
+////	if (heat_view && source == "user") {
+////		document.querySelector("#heatmap").style.opacity = 0; // hide overlay
+////	}
+//});
+

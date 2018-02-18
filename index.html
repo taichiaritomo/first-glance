@@ -3,19 +3,20 @@
 <!-- Dependencies -->
 
 <!-- Include Quill stylesheet -->
-<link href="https://cdn.quilljs.com/1.2.4/quill.snow.css" rel="stylesheet">
+<link href="https://cdn.quilljs.com/1.3.5/quill.snow.css" rel="stylesheet">
 
 <!-- Editor stylesheet -->
 <link href="demo.css" rel="stylesheet">
 
 <!-- Source Sans Font -->
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">
+<!--<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">-->
+<link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,700,700i" rel="stylesheet">
 
 <!-- UnderscoreJS -->
 <script src="underscore.js"></script>
 
 <!-- Quill library -->
-<script src="https://cdn.quilljs.com/1.2.4/quill.js"></script>
+<script src="https://cdn.quilljs.com/1.3.5/quill.js"></script>
 
 <!-- dom-to-image for DOM rasterization -->
 <!-- <script src="dom-to-image.js"></script> -->
@@ -42,9 +43,11 @@
 </head>
 
 <body>
+    
+<div id="main">
 
 <!-- Editor Area -->
-<div id="container" class="experiment-disable experiment-hide">
+<div id="container">
 
 	<!-- Toolbar container -->
 	<div id="toolbar">
@@ -64,41 +67,45 @@
 		</select>
 		
 		<div>
-			<select class="ql-color">
-				<option selected value="#000000"></option>
-				<option value="#666666"></option>
-				<option value="#999999"></option>
-				<option value="#cccccc"></option>
-			</select>
-			<button class="ql-bold"></button>
+			<button class="ql-bold" style="margin-left: 15px"></button>
 			<button class="ql-italic"></button>
             <button class="ql-underline"></button>
 		</div>
+        
+        <div>
+            <select class="ql-color" style="margin-left: 15px;">
+				<option selected value="#000000"></option>
+				<option value="#555555"></option>
+				<option value="#999999"></option>
+				<option value="#cccccc"></option>
+			</select>
+        </div>
+        
+        <div>
+            <select class="ql-align" style="margin-left: 15px;">
+                <option selected></option>
+                <option value="center"></option>
+                <option value="justify"></option>
+                <option value="right"></option>
+            </select>
+        </div>
 		
 		<div class="eye-wrapper">
+<!--
             <button title="Pin Version" id="pin-button" alt="Pin this version">
                 <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <path class="ql-fill" d="M5.7713326,8.01820399 L6.55308438,2.54594155 L5.69594152,2.54594155 L5.69594152,0.545941546 L10.6959415,0.545941546 L10.6959415,2.54594155 L9.83879867,2.54594155 L10.6205504,8.01820399 C11.8687267,8.55142186 12.6959415,9.48427958 12.6959415,10.5459415 L3.69594152,10.5459415 C3.69594152,9.48427958 4.52315635,8.55142186 5.7713326,8.01820399 Z M7.69594152,10.5459415 L8.69594152,10.5459415 L8.69594152,15.5459415 L7.69594152,15.5459415 L7.69594152,10.5459415 Z M8.19594152,18.5459415 L7.69594152,15.5459415 L8.69594152,15.5459415 L8.19594152,18.5459415 Z" transform="translate(8.195942, 9.545942) rotate(45.000000) translate(-8.195942, -9.545942) "></path>
                 </svg>
             </button>
-			<button title="Heat View" id="hotplate-button" alt="Hotplate view">&#9832;</button>
+-->
+<!--			<button title="Heat View" id="hotplate-button" alt="Hotplate view">&#9832;</button>-->
 <!--			<button title="Glance View" class="eye" alt="Glance view">&#9678;</button>-->
 		</div>
 	</div>
 	
 	<div id="editor-container">
-
-		<div id="overlay">
-			<canvas id="heatmap" width="512" height="512"></canvas>
-		</div>
-		
 		<div id="innershadow">
 		</div>
-		
-<!--
-		<div id="corner_bottom-left"></div>
-		<div id="corner_bottom-right"></div>
--->
 
 		<div id="editor">
 		</div>
@@ -122,8 +129,33 @@
     </div>
 
 </div>
-
-<!--</div>-->
+    
+<div id="heatmap-container">
+    <div id="heatmap-toolbar">
+        <div id="viewing-distance-wrapper">
+            Viewing Distance:
+            <div id="viewing-distance-setting">
+                <div id="viewing-distance-num">1.0m</div>
+                <div id="viewing-distance-icon-container">
+                    <div class="viewing-distance-icon viewing-distance-icon-32"></div>
+                    <div class="viewing-distance-icon viewing-distance-icon-64 selected"></div>
+                    <div class="viewing-distance-icon viewing-distance-icon-128"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="overlay">
+        <canvas id="heatmap" width="512" height="512"></canvas>
+    </div>
+</div>
+</div>
+    
+    <div id="info-container">
+    </div>
+    <div id="colophon">
+        2017-18 · <a target="_blank" href="http://taichi.pink">taichi.pink</a>
+    </div>
+    
 
 
 
@@ -145,7 +177,7 @@
 <script src="saliency.js"></script>
 
 <!-- Version Controller -->
-<script src="versions.js"></script>
+<!--<script src="versions.js"></script>-->
 
 <!-- Script for analysis -->
 <script src="blur2.js"></script>
@@ -153,5 +185,8 @@
 
 <!-- Initialize Quill editor -->
 <script src="editor.js"></script>
+    
+<!-- Initialize Demo -->
+<script src="demo.js"></script>
     
 </body>
