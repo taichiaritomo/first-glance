@@ -3,7 +3,7 @@ body {
 	display: flex;
     justify-content: center;
     margin: 0;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'OfficeCodePro', sans-serif;
     font-size: 17px;
     min-width: 1024px;
 }
@@ -34,7 +34,7 @@ body {
 }
 
 .ql-picker {
-    font-family: 'Rubik', sans-serif;
+    font-family: 'OfficeCodePro', sans-serif;
 }
 
 .ql-snow .ql-color-picker .ql-picker-options {
@@ -151,7 +151,7 @@ body {
 }
 
 .ql-editor {
-	font-family: 'Rubik', sans-serif;
+	font-family: 'OfficeCodePro', sans-serif;
 /*	background-color: white;*/
 	font-size: 18px;
     padding: 24px;
@@ -314,6 +314,7 @@ body {
 }
 
 #viewing-distance-wrapper {
+    font-family: sans-serif;
     float: right;
     font-size: 14px;
     color: #444;
