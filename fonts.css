@@ -15,13 +15,13 @@
 
 @font-face {
   font-family: OfficeCodePro;
-  src: url(/fonts/OfficeCodePro-Regular.woff);
+  src: url(fonts/OfficeCodePro-Regular.woff);
   font-weight: 400;
 }
 
 @font-face {
   font-family: OfficeCodePro;
-  src: url(/fonts/OfficeCodePro-RegularItalic.woff);
+  src: url(fonts/OfficeCodePro-RegularItalic.woff);
   font-weight: 400;
   font-style: italic;
 }
@@ -43,13 +43,13 @@
 
 @font-face {
   font-family: OfficeCodePro;
-  src: url(/fonts/OfficeCodePro-Bold.woff);
+  src: url(fonts/OfficeCodePro-Bold.woff);
   font-weight: 600;
 }
 
 @font-face {
   font-family: OfficeCodePro;
-  src: url(/fonts/OfficeCodePro-BoldItalic.woff);
+  src: url(fonts/OfficeCodePro-BoldItalic.woff);
   font-weight: 600;
   font-style: italic;
 }
